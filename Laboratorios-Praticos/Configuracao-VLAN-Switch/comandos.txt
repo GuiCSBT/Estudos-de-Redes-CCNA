@@ -1,0 +1,34 @@
+# --- Configuração de Hostname e Sistema ---
+enable
+configure terminal
+hostname 2960
+
+# --- Segurança e Usuários ---
+username Guilherme password Guilherme123
+service password-encryption
+line console 0
+ exec-timeout 10
+exit
+
+# --- Configuração de Interfaces e VLANs ---
+# Porta de Acesso (VLAN 5)
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 5
+exit
+
+# Porta de Acesso (VLAN 2)
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 2
+exit
+
+# Configuração de Trunk (Uplink)
+interface GigabitEthernet0/1
+ switchport mode trunk
+exit
+
+# --- Verificação ---
+end
+show running-config
+show vlan brief
