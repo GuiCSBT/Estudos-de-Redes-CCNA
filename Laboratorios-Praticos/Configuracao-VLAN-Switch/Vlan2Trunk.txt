@@ -1,0 +1,28 @@
+# --- Passo 1: Configuração da VLAN e Porta de Acesso ---
+# Criando a VLAN 5 e definindo o nome administrativo
+Switch>enable
+Switch#configure terminal
+Switch(config)#vlan 5
+Switch(config-vlan)#name ADM
+Switch(config-vlan)#exit
+
+# Configurando a porta conectada ao computador (PC0)
+Switch(config)#interface fastEthernet 0/1
+Switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 5
+Switch(config-if)#exit
+
+# --- Passo 2: Configuração do Link Trunk ---
+# Definindo a porta de conexão entre os switches como Tronco
+Switch(config)#interface fastEthernet 0/15
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#end
+
+# --- Passo 3: Verificação Técnica ---
+# Validando a criação da VLAN e atribuição da porta
+Switch#show vlan brief
+
+# Verificando o status do Trunk (Modo Operacional e Encapsulamento)
+Switch#show interface fastEthernet 0/15 switchport
+# No Switch1 (outro lado da conexão)
+Switch1#show interface fastEthernet 0/15 switchport
