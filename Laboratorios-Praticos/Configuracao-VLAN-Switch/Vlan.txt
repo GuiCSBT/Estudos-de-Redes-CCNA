@@ -1,0 +1,58 @@
+# Parte 1: Identificacao e Criacao do Banco de Dados de VLANs
+enable
+configure terminal
+hostname SW1
+
+vlan 5
+ name ADM
+exit
+vlan 10
+ name Vendas
+exit
+vlan 20
+ name Gerente
+exit
+vlan 30
+ name Engenheiros
+exit
+vlan 40
+ name Suporte
+exit
+
+# Parte 2: Configuracao das Portas de Acesso (Usuarios)
+interface fastEthernet 0/1
+ switchport mode access
+ switchport access vlan 5
+exit
+
+interface fastEthernet 0/5
+ switchport mode access
+ switchport access vlan 10
+exit
+
+interface fastEthernet 0/6
+ switchport mode access
+ switchport access vlan 20
+exit
+
+interface fastEthernet 0/7
+ switchport mode access
+ switchport access vlan 30
+exit
+
+interface fastEthernet 0/8
+ switchport mode access
+ switchport access vlan 40
+exit
+
+# Parte 3: Configuracao da Interface Trunk (Enlace entre Switches)
+interface fastEthernet 0/15
+ switchport mode trunk
+exit
+
+# Parte 4: Verificacao e Validacao da Rede
+end
+show vlan brief
+show interfaces trunk
+show interface fastEthernet 0/15 switchport
+write memory
