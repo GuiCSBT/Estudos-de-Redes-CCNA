@@ -1,0 +1,76 @@
+Router0 (RoteadorA)
+enable
+configure terminal
+
+hostname RoteadorA
+
+interface fastEthernet 0/0
+ ip address 10.0.0.1 255.255.255.0
+ no shutdown
+exit
+
+interface loopback 1
+ ip address 172.16.0.1 255.255.255.0
+exit
+
+end
+
+show ip interface brief
+
+
+Router1 (RoteadorB)
+
+enable
+configure terminal
+
+hostname RoteadorB
+
+interface fastEthernet 0/0
+ ip address 10.0.0.2 255.255.255.0
+ no shutdown
+exit
+
+interface loopback 1
+ ip address 172.16.1.1 255.255.255.0
+exit
+
+end
+
+
+
+Router0 (RoteadorA)
+enable
+configure terminal
+
+! 1) Criar usuário local (pra usar no login local do Telnet)
+username Guilherme password ccent
+
+! 2) Senha do modo privilegiado (enable)
+enable secret cisco
+
+! 3) Liberar acesso remoto via Telnet nas VTY
+line vty 0 15
+ login local
+ transport input telnet
+exit
+
+! 4) Rota default (saída para o outro roteador)
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0
+
+end
+
+🔹 Router1 (RoteadorB)
+enable
+configure terminal
+
+username Guilherme password ccent
+enable secret cisco
+
+line vty 0 15
+ login local
+ transport input telnet
+exit
+
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0
+
+end
